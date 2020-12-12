@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Egitim1.ViewModels;assembly=Egitim1"
+             x:Name="PersonPage"
+             x:Class="Egitim1.MainPage"
+             >
+    <ContentPage.BindingContext>
+        <viewModels:PersonViewModel/>
+    </ContentPage.BindingContext>
+    <ContentView.Content>
+        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+            <ListView HasUnevenRows="True" x:Name="lstPerson" ItemsSource="{Binding Person}" IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding Path=BindingContext.RefreshCommand,Source={x:Reference PersonPage}}"
+                      IsRefreshing="{Binding IsRefreshing,Mode=OneWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        
+                        
+                        <TextCell Text="{Binding Name}" Detail="{Binding Surname}">
+                            <!--
+                        <TextCell.ContextActions>
+                            <MenuItem Text="Delete" IsDestructive="True" Clicked="onDelete" CommandParameter="{Binding}"></MenuItem>
+                                <MenuItem Text="Update" Clicked="onUpdate" CommandParameter="{Binding}"></MenuItem>
+
+                        </TextCell.ContextActions>
+                 -->
+
+                            <TextCell.ContextActions>
+                                <MenuItem Text="Delete" IsDestructive="True" CommandParameter="{Binding}" Command="{Binding Path=BindingContext.DeleteCommand,Source={x:Reference PersonPage}}"></MenuItem>
+                                <MenuItem Text="Update" CommandParameter="{Binding}" Command="{Binding Path=BindingContext.UpdateCommand,Source={x:Reference PersonPage}}"></MenuItem>
+
+                            </TextCell.ContextActions>
+                        </TextCell>
+                        
+                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+               
+            </ListView>
+        </StackLayout>
+    </ContentView.Content>
+
+</ContentPage>
